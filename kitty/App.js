@@ -4,7 +4,7 @@ import { StyleSheet, Text, View } from "react-native";
 export default function App() {
   return (
     <View style={styles.container}>
-      <Text>hejj!</Text>
+      <Text>{JSON.stringify(kitties)}</Text>
       <StatusBar style="auto" />
     </View>
   );
