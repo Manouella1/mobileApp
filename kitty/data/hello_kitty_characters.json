@@ -19,7 +19,7 @@
     "id": 3,
     "name": "Keroppi",
     "description": "Keroppi is an energetic and adventurous frog who loves to explore and have fun.",
-    "image_url": "assets/images/kitty.jpg",
+    "image_url": "./assets/images/kitty.jpg",
     "favorite_food": "Rice Balls",
     "age": 7
   },
