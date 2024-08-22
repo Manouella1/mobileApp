@@ -1,22 +1,51 @@
-import { StatusBar } from "expo-status-bar";
-import { useState, useEffect } from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { Text, View } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
+import { NavigationContainer } from "@react-navigation/native";
+import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
+import HomeScreen from "./screens/HomeScreen";
+import SettingsScreen from "./screens/Settings";
+
+const Tab = createBottomTabNavigator();
 
 export default function App() {
-  const [kitties, setKitties] = useState([]);
   return (
-    <View style={styles.container}>
-      <Text>{JSON.stringify(kitties)}</Text>
-      <StatusBar style="auto" /> jhwsjk
-    </View>
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={({ route }) => ({
+          tabBarIcon: ({ focused, color, size }) => {
+            if (route.name === "Home") {
+              return (
+                <Ionicons
+                  name={
+                    focused
+                      ? "ios-information-circle"
+                      : "ios-information-circle-outline"
+                  }
+                  size={size}
+                  color={color}
+                />
+              );
+            } else if (route.name === "Settings") {
+              return (
+                <Ionicons
+                  name={focused ? "ios-list-box" : "ios-list"}
+                  size={size}
+                  color={color}
+                />
+              );
+            }
+          },
+          tabBarInactiveTintColor: "gray",
+          tabBarActiveTintColor: "tomato",
+        })}
+      >
+        <Tab.Screen
+          name="Home"
+          component={HomeScreen}
+          options={{ tabBarBadge: 3 }}
+        />
+        <Tab.Screen name="Settings" component={SettingsScreen} />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#fff",
-    alignItems: "center",
-    justifyContent: "center",
-  },
-});

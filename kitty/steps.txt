@@ -1,0 +1,123 @@
+STEPS for instaltion project and Dependencies:
+
+
+SafeAreaView ios component-----
+
+*** Step 1:  Expo React Native Project: ***
+
+a. To create the React Native project with a empty template:
+
+npx create-expo-app@latest nameProject --template blank
+
+b. $ cd nameProject
+c. $ npm start    // $ npx expo start
+
+d. create a especific gitignore if need it
+
+
+*** STEP 2 :  Navigation Dependencies: ***
+
+Install the core React Navigation package
+npm install @react-navigation/native
+
+Install required dependencies for React Navigation
+npm install react-native-screens react-native-safe-area-context
+
+Install Additional Navigation Packages>>>
+
+npm install @react-navigation/stack
+npm install @react-navigation/bottom-tabs
+npm install @react-navigation/drawer
+
+ Install React Native Gesture Handler (if needed)>>>
+
+ npm install react-native-gesture-handler
+
+ Rebuild the Project>>>>
+
+rebuild with EXPO
+$ expo start -c
+
+*** STEP 3:  Formik / logIn/ Sign Up ***
+
+npm install formik
+
+-- To handle Validation with YUP:
+
+npm install yup
+
+
+
+*** STEP 4:  CSS Tailwind ***
+
+npm install --save-dev --save-exact tailwindcss@3.3.2
+
+npx tailwind init
+
+modify tailwind.config.js >>
+
+  content: [
+    './App.{js, jsx, ts, tsx}',
+    './components//*.{js, jsx , ts, tsx}',
+    './app//*.{js,  jsx, ts, tsx}',
+  ],
+
+modify babel.config.js >>
+
+   plugins: ['nativewind/babel'],
+
+   -npm install nativewind
+
+   *** STEP 5:  Splash ***
+
+npm install expo-splash-screen
+
+
+   *** STEP 6:  Expo-router ***
+
+   npm install expo-router
+
+  *** STEP 7:  ESlint ***
+
+npm install --save-dev eslint@8 eslint-plugin-react eslint-plugin-react-native
+
+
+  ** ESLint-konfigurationsfil (.eslintrc.json i projektets rotmapp):
+   {
+  "env": {
+    "react-native/react-native": true
+  },
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": "latest",
+    "sourceType": "module"
+  },
+  "plugins": ["react", "react-native"],
+  "root": true,
+  "rules": {
+    "react/react-in-jsx-scope": "off"
+  }
+}
+export default function App() {
+  SplashScreen.preventAutoHideAsync()
+  setTimeout(SplashScreen.hideAsync, 3000)
+  return (
+    <SafeAreaProvider>
+      <StatusBar barStyle="light-content" backgroundColor="black" />
+      <NavigationContainer>
+        <Stack.Navigator
+          screenOptions={{
+            headerShown: false,
+          }}
+        >
+          <Stack.Screen name="SignIn" component={SignInScreen} />
+          <Stack.Screen name="SignUp" component={SignUpScreen} />
+          <Stack.Screen name="Main" component={MainNavigator} />
+        </Stack.Navigator>
+      </NavigationContainer>
+    </SafeAreaProvider>
+  )
+}
