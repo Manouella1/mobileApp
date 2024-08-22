@@ -6,11 +6,15 @@ import {
   Image,
   StyleSheet,
   ActivityIndicator,
+  Modal,
 } from "react-native";
+import MyButton from "../components/button"; // Importera din MyButton-komponent
 
 const HomeScreen = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
+  const [modalVisible, setModalVisible] = useState(false);
+  const [selectedItem, setSelectedItem] = useState(null);
 
   useEffect(() => {
     fetch(
@@ -27,6 +31,16 @@ const HomeScreen = () => {
       });
   }, []);
 
+  const openModal = (item) => {
+    setSelectedItem(item);
+    setModalVisible(true);
+  };
+
+  const closeModal = () => {
+    setModalVisible(false);
+    setSelectedItem(null);
+  };
+
   if (loading) {
     return (
       <View style={styles.loader}>
@@ -40,23 +54,49 @@ const HomeScreen = () => {
       <Image source={{ uri: item.image_url }} style={styles.image} />
       <View style={styles.textContainer}>
         <Text style={styles.name}>{item.name}</Text>
-        <Text style={styles.description}>{item.description}</Text>
-        <Text style={styles.info}>Age: {item.age}</Text>
-        <Text style={styles.info}>Favorite Food: {item.favorite_food}</Text>
+        <MyButton // Använd din MyButton-komponent
+          title="Learn More"
+          onPress={() => openModal(item)}
+        />
       </View>
     </View>
   );
 
   return (
-    <FlatList
-      data={data}
-      renderItem={renderItem}
-      keyExtractor={(item) => item.name}
-    />
+    <View style={styles.container}>
+      <FlatList
+        data={data}
+        renderItem={renderItem}
+        keyExtractor={(item) => item.name}
+      />
+      {selectedItem && (
+        <Modal
+          animationType="fade"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={closeModal}
+        >
+          <View style={styles.modalContainer}>
+            <View style={styles.modalContent}>
+              <Text style={styles.name}>{selectedItem.name}</Text>
+              <Text style={styles.description}>{selectedItem.description}</Text>
+              <Text style={styles.info}>Age: {selectedItem.age}</Text>
+              <Text style={styles.info}>
+                Favorite Food: {selectedItem.favorite_food}
+              </Text>
+              <MyButton title="Close" onPress={closeModal} />
+            </View>
+          </View>
+        </Modal>
+      )}
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
   loader: {
     flex: 1,
     justifyContent: "center",
@@ -81,13 +121,28 @@ const styles = StyleSheet.create({
     fontSize: 18,
     fontWeight: "bold",
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.5)",
+  },
+  modalContent: {
+    width: 300,
+    padding: 20,
+    backgroundColor: "white",
+    borderRadius: 10,
+    alignItems: "center",
+  },
   description: {
     fontSize: 14,
     color: "#666",
+    marginTop: 10,
   },
   info: {
     fontSize: 12,
     color: "#888",
+    marginTop: 5,
   },
 });
 
