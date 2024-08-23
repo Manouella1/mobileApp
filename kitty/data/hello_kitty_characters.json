@@ -3,7 +3,7 @@
     "id": 1,
     "name": "Hello Kitty",
     "description": "Hello Kitty is a cheerful and happy girl with a heart of gold.",
-    "image_url": "assets/images/kitty.jpg",
+    "image_url": "https://i.pinimg.com/originals/6c/5e/2a/6c5e2ad141ee2ef39582fcd7bf6b281b.png",
     "favorite_food": "Apple Pie",
     "age": 5
   },
@@ -19,7 +19,7 @@
     "id": 3,
     "name": "Keroppi",
     "description": "Keroppi is an energetic and adventurous frog who loves to explore and have fun.",
-    "image_url": "./assets/images/kitty.jpg",
+    "image_url": "../assets/images/kitty.jpg",
     "favorite_food": "Rice Balls",
     "age": 7
   },
@@ -27,7 +27,7 @@
     "id": 4,
     "name": "Badtz-Maru",
     "description": "Badtz-Maru is a mischievous penguin with a rebellious attitude but a good heart.",
-    "image_url": "assets/images/kitty.jpg",
+    "image_url": "..assets/images/kitty.jpg",
     "favorite_food": "Fish Burgers",
     "age": 8
   },
@@ -35,7 +35,7 @@
     "id": 5,
     "name": "Pompompurin",
     "description": "Pompompurin is a laid-back golden retriever who loves to take naps and eat pudding.",
-    "image_url": "assets/images/kitty.jpg",
+    "image_url": "..assets/images/kitty.jpg",
     "favorite_food": "Caramel Pudding",
     "age": 5
   }

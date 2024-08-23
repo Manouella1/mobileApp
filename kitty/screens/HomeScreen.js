@@ -7,10 +7,15 @@ import {
   StyleSheet,
   ActivityIndicator,
   Modal,
+  TouchableOpacity,
 } from "react-native";
-import MyButton from "../components/button"; // Importera din MyButton-komponent
+import LottieView from "lottie-react-native";
+// import AsyncStorage from "@react-native-async-storage/async-storage";
 
-const HomeScreen = () => {
+// button komponenten
+import MyButton from "../components/button";
+
+const HomeScreen = ({ favorites, updateFavorites }) => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [modalVisible, setModalVisible] = useState(false);
@@ -30,6 +35,19 @@ const HomeScreen = () => {
         setLoading(false);
       });
   }, []);
+
+  const toggleFavorite = (item) => {
+    const itemExists = favorites.find((fav) => fav.name === item.name);
+    const newFavorites = itemExists
+      ? favorites.filter((fav) => fav.name !== item.name)
+      : [...favorites, item];
+
+    updateFavorites(newFavorites);
+  };
+
+  const isFavorite = (item) => {
+    return favorites.some((fav) => fav.name === item.name);
+  };
 
   const openModal = (item) => {
     setSelectedItem(item);
@@ -54,10 +72,19 @@ const HomeScreen = () => {
       <Image source={{ uri: item.image_url }} style={styles.image} />
       <View style={styles.textContainer}>
         <Text style={styles.name}>{item.name}</Text>
-        <MyButton // Använd din MyButton-komponent
-          title="Learn More"
-          onPress={() => openModal(item)}
-        />
+        <TouchableOpacity
+          onPress={() => toggleFavorite(item)}
+          style={styles.heartContainer}
+        >
+          <LottieView
+            source={require("../assets/heart.json")}
+            autoPlay={false}
+            loop={false}
+            style={styles.heart}
+            progress={isFavorite(item) ? 1 : 0}
+          />
+        </TouchableOpacity>
+        <MyButton title="Learn More" onPress={() => openModal(item)} />
       </View>
     </View>
   );
@@ -67,7 +94,7 @@ const HomeScreen = () => {
       <FlatList
         data={data}
         renderItem={renderItem}
-        keyExtractor={(item) => item.name}
+        keyExtractor={(item, index) => `${item.name}-${item.age}-${index}`}
       />
       {selectedItem && (
         <Modal
@@ -120,6 +147,15 @@ const styles = StyleSheet.create({
   name: {
     fontSize: 18,
     fontWeight: "bold",
+  },
+  heartContainer: {
+    position: "absolute",
+    right: 10,
+    top: 10,
+  },
+  heart: {
+    width: 50,
+    height: 50,
   },
   modalContainer: {
     flex: 1,
