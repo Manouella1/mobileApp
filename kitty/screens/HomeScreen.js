@@ -7,12 +7,10 @@ import {
   StyleSheet,
   ActivityIndicator,
   Modal,
-  TouchableOpacity,
+  Pressable,
 } from "react-native";
 import LottieView from "lottie-react-native";
-// import AsyncStorage from "@react-native-async-storage/async-storage";
-
-// button komponenten
+// Importera din MyButton-komponent
 import MyButton from "../components/button";
 
 const HomeScreen = ({ favorites, updateFavorites }) => {
@@ -72,7 +70,7 @@ const HomeScreen = ({ favorites, updateFavorites }) => {
       <Image source={{ uri: item.image_url }} style={styles.image} />
       <View style={styles.textContainer}>
         <Text style={styles.name}>{item.name}</Text>
-        <TouchableOpacity
+        <Pressable
           onPress={() => toggleFavorite(item)}
           style={styles.heartContainer}
         >
@@ -83,7 +81,7 @@ const HomeScreen = ({ favorites, updateFavorites }) => {
             style={styles.heart}
             progress={isFavorite(item) ? 1 : 0}
           />
-        </TouchableOpacity>
+        </Pressable>
         <MyButton title="Learn More" onPress={() => openModal(item)} />
       </View>
     </View>
